@@ -4,7 +4,7 @@ from flask_cors import CORS, cross_origin
 import uuid
 
 app = Flask(__name__)
-app.config['BASE_URL'] = '127.0.0.1:5000'
+app.config['BASE_URL'] = 'http://127.0.0.1:5000'
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 cors = CORS(app)
@@ -12,7 +12,7 @@ cors = CORS(app)
 hash_table = {}
 
 def get_random_key():
-	return uuid.uuid4()
+	return str(uuid.uuid4())
 
 def get_unique_keys():
 	short_url = None
@@ -67,7 +67,7 @@ def all_hashes():
 @cross_origin()
 def resolve(hash):
 	try:
-		val = hash_table[float(hash)]
+		val = hash_table[hash]
 		return redirect(val, code=302)
 	except Exception as e:
 		print(e)
